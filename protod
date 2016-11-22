@@ -299,6 +299,13 @@ class ProtobufExtractor:
                     res = FileDescriptorDisassembler(fds)
                     if len(res.desc.name)>0:
                         if res.desc.name not in seen:
+
+                            # Create directory if needed
+                            path = os.path.dirname(res.desc.name)
+                            if path:
+                                if not os.path.exists(path):
+                                    os.makedirs(path)
+
                             open(res.desc.name+'.protoc','wb').write(content)
                             res.render()
                             seen.append(res.desc.name)
